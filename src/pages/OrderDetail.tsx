@@ -43,6 +43,8 @@ const OrderDetail: React.FC = () => {
   const [files, setFiles] = useState<OrderFile[]>([]);
   const [clientName, setClientName] = useState('');
   const [loading, setLoading] = useState(true);
+  const [previewFile, setPreviewFile] = useState<OrderFile | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
