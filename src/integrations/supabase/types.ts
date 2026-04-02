@@ -58,33 +58,42 @@ export type Database = {
           client_id: string
           created_at: string
           description: string | null
+          gallery_folder: string | null
           id: string
           operator_id: string | null
           status: string
+          tariff: string | null
           title: string
           updated_at: string
+          work_type: string
         }
         Insert: {
           caster_id?: string | null
           client_id: string
           created_at?: string
           description?: string | null
+          gallery_folder?: string | null
           id?: string
           operator_id?: string | null
           status?: string
+          tariff?: string | null
           title: string
           updated_at?: string
+          work_type?: string
         }
         Update: {
           caster_id?: string | null
           client_id?: string
           created_at?: string
           description?: string | null
+          gallery_folder?: string | null
           id?: string
           operator_id?: string | null
           status?: string
+          tariff?: string | null
           title?: string
           updated_at?: string
+          work_type?: string
         }
         Relationships: []
       }
