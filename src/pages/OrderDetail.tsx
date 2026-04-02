@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { getStatusConfig, getNextStatus, ORDER_STATUSES, type OrderStatus } from '@/lib/orderStatuses';
-import { ArrowLeft, ArrowRight, Download, FileType, Calendar, User, Trash2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, FileType, Calendar, User, Trash2, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import STLViewer from '@/components/STLViewer';
 
 interface Order {
   id: string;
