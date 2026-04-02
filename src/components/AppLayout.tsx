@@ -13,6 +13,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navItems = [
     { label: 'Дашборд', icon: LayoutDashboard, path: '/dashboard', roles: ['admin', 'operator', 'caster', 'client'] },
     { label: 'Новый заказ', icon: Plus, path: '/orders/new', roles: ['client', 'admin'] },
+    { label: 'Заказы', icon: ClipboardList, path: '/admin/orders', roles: ['admin'] },
     { label: 'Пользователи', icon: Users, path: '/admin/users', roles: ['admin'] },
   ];
 
