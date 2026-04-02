@@ -247,11 +247,21 @@ const OrderDetail: React.FC = () => {
                         </span>
                       )}
                     </div>
+                     <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => openPreview(file)}
+                      className="h-8 w-8"
+                      title="Просмотр"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => downloadFile(file.file_path, file.file_name)}
                       className="h-8 w-8"
+                      title="Скачать"
                     >
                       <Download className="h-4 w-4" />
                     </Button>
