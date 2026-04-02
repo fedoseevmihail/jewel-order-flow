@@ -286,6 +286,18 @@ const OrderDetail: React.FC = () => {
             </Button>
           )}
         </div>
+
+        {/* STL Preview Dialog */}
+        <Dialog open={!!previewFile} onOpenChange={(open) => !open && closePreview()}>
+          <DialogContent className="max-w-3xl h-[70vh]">
+            <DialogHeader>
+              <DialogTitle>{previewFile?.file_name}</DialogTitle>
+            </DialogHeader>
+            <div className="flex-1 min-h-0 h-full">
+              {previewUrl && <STLViewer url={previewUrl} />}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </AppLayout>
   );
