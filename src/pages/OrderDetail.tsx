@@ -113,6 +113,23 @@ const OrderDetail: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
+  const openPreview = async (file: OrderFile) => {
+    const { data, error } = await supabase.storage.from('stl-files').download(file.file_path);
+    if (error || !data) {
+      toast({ title: 'Ошибка загрузки', variant: 'destructive' });
+      return;
+    }
+    const url = URL.createObjectURL(data);
+    setPreviewUrl(url);
+    setPreviewFile(file);
+  };
+
+  const closePreview = () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(null);
+    setPreviewFile(null);
+  };
+
   const deleteOrder = async () => {
     if (!order) return;
     const { error } = await supabase.from('orders').delete().eq('id', order.id);
