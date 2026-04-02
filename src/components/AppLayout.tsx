@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Gem, LayoutDashboard, Plus, Users, LogOut } from 'lucide-react';
+import { Gem, LayoutDashboard, Plus, Users, LogOut, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
