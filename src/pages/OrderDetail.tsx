@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { getStatusConfig, getNextStatus, ORDER_STATUSES, type OrderStatus } from '@/lib/orderStatuses';
-import { ArrowLeft, ArrowRight, Download, FileType, Calendar, User, Trash2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, FileType, Calendar, User, Trash2, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import STLViewer from '@/components/STLViewer';
 
 interface Order {
   id: string;
@@ -41,6 +43,8 @@ const OrderDetail: React.FC = () => {
   const [files, setFiles] = useState<OrderFile[]>([]);
   const [clientName, setClientName] = useState('');
   const [loading, setLoading] = useState(true);
+  const [previewFile, setPreviewFile] = useState<OrderFile | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -107,6 +111,23 @@ const OrderDetail: React.FC = () => {
     a.download = fileName;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const openPreview = async (file: OrderFile) => {
+    const { data, error } = await supabase.storage.from('stl-files').download(file.file_path);
+    if (error || !data) {
+      toast({ title: 'Ошибка загрузки', variant: 'destructive' });
+      return;
+    }
+    const url = URL.createObjectURL(data);
+    setPreviewUrl(url);
+    setPreviewFile(file);
+  };
+
+  const closePreview = () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(null);
+    setPreviewFile(null);
   };
 
   const deleteOrder = async () => {
@@ -226,11 +247,21 @@ const OrderDetail: React.FC = () => {
                         </span>
                       )}
                     </div>
+                     <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => openPreview(file)}
+                      className="h-8 w-8"
+                      title="Просмотр"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => downloadFile(file.file_path, file.file_name)}
                       className="h-8 w-8"
+                      title="Скачать"
                     >
                       <Download className="h-4 w-4" />
                     </Button>
@@ -255,6 +286,18 @@ const OrderDetail: React.FC = () => {
             </Button>
           )}
         </div>
+
+        {/* STL Preview Dialog */}
+        <Dialog open={!!previewFile} onOpenChange={(open) => !open && closePreview()}>
+          <DialogContent className="max-w-3xl h-[70vh]">
+            <DialogHeader>
+              <DialogTitle>{previewFile?.file_name}</DialogTitle>
+            </DialogHeader>
+            <div className="flex-1 min-h-0 h-full">
+              {previewUrl && <STLViewer url={previewUrl} />}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </AppLayout>
   );

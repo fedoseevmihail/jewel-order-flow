@@ -53,7 +53,8 @@ const CreateOrder: React.FC = () => {
 
       // Upload files
       for (const file of files) {
-        const filePath = `${user.id}/${order.id}/${Date.now()}_${file.name}`;
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const filePath = `${user.id}/${order.id}/${Date.now()}_${safeName}`;
         const { error: uploadError } = await supabase.storage
           .from('stl-files')
           .upload(filePath, file);
