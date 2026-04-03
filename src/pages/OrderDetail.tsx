@@ -300,6 +300,7 @@ const OrderDetail: React.FC = () => {
                   <STLViewer url={previewUrl} />
                 </Suspense>
               )}
+            </div>
           </DialogContent>
         </Dialog>
       </div>
