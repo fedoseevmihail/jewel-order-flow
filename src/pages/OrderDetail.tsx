@@ -295,8 +295,11 @@ const OrderDetail: React.FC = () => {
               <DialogTitle>{previewFile?.file_name}</DialogTitle>
             </DialogHeader>
             <div className="flex-1 min-h-0 h-full">
-              {previewUrl && <STLViewer url={previewUrl} />}
-            </div>
+              {previewUrl && (
+                <Suspense fallback={<div className="flex items-center justify-center h-full text-muted-foreground">Загрузка...</div>}>
+                  <STLViewer url={previewUrl} />
+                </Suspense>
+              )}
           </DialogContent>
         </Dialog>
       </div>
