@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -12,7 +12,8 @@ import { useToast } from '@/hooks/use-toast';
 import { getStatusConfig, getNextStatus, ORDER_STATUSES, type OrderStatus } from '@/lib/orderStatuses';
 import { ArrowLeft, ArrowRight, Download, FileType, Calendar, User, Trash2, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import STLViewer from '@/components/STLViewer';
+
+const STLViewer = lazy(() => import('@/components/STLViewer'));
 
 interface Order {
   id: string;
@@ -294,7 +295,11 @@ const OrderDetail: React.FC = () => {
               <DialogTitle>{previewFile?.file_name}</DialogTitle>
             </DialogHeader>
             <div className="flex-1 min-h-0 h-full">
-              {previewUrl && <STLViewer url={previewUrl} />}
+              {previewUrl && (
+                <Suspense fallback={<div className="flex items-center justify-center h-full text-muted-foreground">Загрузка...</div>}>
+                  <STLViewer url={previewUrl} />
+                </Suspense>
+              )}
             </div>
           </DialogContent>
         </Dialog>
