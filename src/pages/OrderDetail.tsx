@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -12,7 +12,8 @@ import { useToast } from '@/hooks/use-toast';
 import { getStatusConfig, getNextStatus, ORDER_STATUSES, type OrderStatus } from '@/lib/orderStatuses';
 import { ArrowLeft, ArrowRight, Download, FileType, Calendar, User, Trash2, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import STLViewer from '@/components/STLViewer';
+
+const STLViewer = lazy(() => import('@/components/STLViewer'));
 
 interface Order {
   id: string;
